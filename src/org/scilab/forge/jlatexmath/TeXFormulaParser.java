@@ -29,10 +29,9 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Color;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Color;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -396,7 +395,7 @@ public class TeXFormulaParser {
 
         // argument value parsers
         argValueParsers.put("TeXConstants", new TeXConstantsValueParser());
-        argValueParsers.put("TeXFormula", new TeXFormulaValueParser());
+        argValueParsers.put("TeXFormula", TeXFormula.makeValueParser());
         argValueParsers.put("String", new StringValueParser());
         argValueParsers.put("float", new FloatValueParser());
         argValueParsers.put("int", new IntValueParser());

@@ -164,7 +164,7 @@ public class SymbolAtom extends CharSymbol {
 	Box cb = new CharBox(c);
 	if (env.getSmallCap() && unicode != 0 && Character.isLowerCase(unicode)) {
 	    try {
-		cb = new ScaleBox(new CharBox(tf.getChar(TeXFormula.symbolTextMappings[Character.toUpperCase(unicode)], style)), 0.8, 0.8);
+		cb = new ScaleBox(new CharBox(tf.getChar( TeXFormula.symbolTextMappings[Character.toUpperCase(unicode)], style)), 0.8, 0.8);
 	    } catch (SymbolMappingNotFoundException e) { }
 	}
 

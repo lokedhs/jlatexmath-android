@@ -46,7 +46,7 @@ public class LaTeXAtom extends Atom {
         if (fontInfos != null) {
             TeXFormula.externalFontMap.put(Character.UnicodeBlock.BASIC_LATIN, null);
         }
-	RowAtom rat = (RowAtom)((RomanAtom)new TeXFormula("\\mathrm{XETL}").root).base;
+	RowAtom rat = (RowAtom)((RomanAtom)TeXFormula.make("\\mathrm{XETL}").root).base;
         if (fontInfos != null) {
             TeXFormula.externalFontMap.put(Character.UnicodeBlock.BASIC_LATIN, fontInfos);
         }

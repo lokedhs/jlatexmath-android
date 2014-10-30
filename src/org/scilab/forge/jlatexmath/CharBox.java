@@ -29,12 +29,12 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
-import java.awt.Stroke;
-import java.awt.BasicStroke;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Font;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Graphics2D;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.geom.AffineTransform;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.geom.Rectangle2D;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Stroke;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.BasicStroke;
 
 /**
  * A box representing a single character.

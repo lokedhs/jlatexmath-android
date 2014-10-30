@@ -29,7 +29,7 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Font;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Font;
 
 /**
  * Represents a character together with its font, font ID and metric information.

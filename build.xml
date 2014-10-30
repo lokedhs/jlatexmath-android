@@ -11,7 +11,7 @@
     <property name="class.dir" value="/org/scilab/forge/jlatexmath" />
     <property name="project.src.dir" value="${project.root.dir}/src/${class.dir}" />
     <property name="project.bin.dir" value="${project.root.dir}/bin" />
-    <property name="project.ex.dir" value="${project.root.dir}/examples" />
+    <property name="project.ex.dir" value="renderawt/examples" />
     <property name="ex.basic" value="${project.ex.dir}/Basic" />
     <property name="ex.macros" value="${project.ex.dir}/Macros" />
     <property name="package.dir" value="dist/" />

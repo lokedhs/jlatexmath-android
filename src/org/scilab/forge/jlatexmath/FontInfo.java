@@ -29,7 +29,7 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Font;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Font;
 import java.util.HashMap;
 import java.util.Map;
 

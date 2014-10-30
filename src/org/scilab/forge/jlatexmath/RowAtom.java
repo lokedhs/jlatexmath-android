@@ -33,7 +33,6 @@ package org.scilab.forge.jlatexmath;
 
 import java.util.BitSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.ListIterator;
 
 import org.scilab.forge.jlatexmath.dynamic.DynamicAtom;

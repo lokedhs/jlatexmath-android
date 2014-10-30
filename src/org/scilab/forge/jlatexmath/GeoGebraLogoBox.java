@@ -28,12 +28,12 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Graphics2D;
-import java.awt.Color;
-import java.awt.BasicStroke;
-import java.awt.Stroke;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Graphics2D;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Color;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.BasicStroke;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Stroke;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.geom.AffineTransform;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.image.BufferedImage;
 
 /**
  * A box representing a box containing a graphics.

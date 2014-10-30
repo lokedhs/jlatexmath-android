@@ -36,13 +36,10 @@ package org.scilab.forge.jlatexmath.fop;
 import org.scilab.forge.jlatexmath.TeXIcon;
 import org.scilab.forge.jlatexmath.TeXConstants;
 import org.scilab.forge.jlatexmath.TeXFormula;
-import org.scilab.forge.jlatexmath.SpaceAtom;
 
 import java.awt.Color;
 import java.awt.geom.Point2D;
 import java.util.HashMap;
-import java.util.List;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.StringTokenizer;
 

@@ -33,16 +33,14 @@ package org.scilab.forge.jlatexmath;
 
 import java.lang.reflect.Method;
 
-import java.awt.Font;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Font;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.awt.GraphicsEnvironment;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.GraphicsEnvironment;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Element;
@@ -305,7 +303,7 @@ public class DefaultTeXFontParser {
         if (settings != null) { // element present
 	    // get required string attribute
 	    String include = getAttrValueAndCheckIfNotNull("include", settings);
-	    TeXFormula.addSymbolMappings(base.getClass().getResourceAsStream(include), include);
+	    TeXFormula.addSymbolMappings( base.getClass().getResourceAsStream( include ), include );
 	}
     }
     
@@ -350,7 +348,7 @@ public class DefaultTeXFontParser {
 
     public static Font createFont(InputStream fontIn, String name) throws ResourceParseException {
         try {
-            Font f = Font.createFont(Font.TRUETYPE_FONT, fontIn).deriveFont(TeXFormula.PIXELS_PER_POINT);
+            Font f = Font.createFont(Font.TRUETYPE_FONT, fontIn).deriveFont( TeXFormula.PIXELS_PER_POINT);
 	    GraphicsEnvironment graphicEnv = GraphicsEnvironment.getLocalGraphicsEnvironment();
 	    /**
 	     * The following fails under java 1.5

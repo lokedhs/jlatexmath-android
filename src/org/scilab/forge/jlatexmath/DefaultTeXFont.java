@@ -29,12 +29,11 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Font;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Font;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
-import java.lang.Character.UnicodeBlock;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.FileNotFoundException;
@@ -162,7 +161,7 @@ public class DefaultTeXFont implements TeXFont {
         if (!loadedAlphabets.contains(alphabet)) {
             addTeXFontDescription(inlanguage, language);
             SymbolAtom.addSymbolAtom(insymbols, symbols);
-            TeXFormula.addSymbolMappings(inmappings, mappings);
+            TeXFormula.addSymbolMappings( inmappings, mappings );
             loadedAlphabets.add(alphabet);
         }
     }
@@ -535,13 +534,13 @@ public class DefaultTeXFont implements TeXFont {
             generalSettings.put("scriptfactor", Math.abs(ss / ds));
             generalSettings.put("scriptscriptfactor", Math.abs(sss / ds));
             generalSettings.put("textfactor", Math.abs(ts / ds));
-            TeXIcon.defaultSize = Math.abs(ds);
+            TeXFormula.defaultSize = Math.abs(ds);
         }
     }
 
     public static void setMagnification(float mag) {
         if (magnificationEnable) {
-            TeXIcon.magFactor = mag / 1000f;
+            TeXFormula.magFactor = mag / 1000f;
         }
     }
 
@@ -554,7 +553,7 @@ public class DefaultTeXFont implements TeXFont {
         if (param == null)
             return 0;
         else
-            return ((Float) param).floatValue();
+            return (Float)param;
     }
 
     public static float getSizeFactor(int style) {

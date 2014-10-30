@@ -29,9 +29,9 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.Color;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Graphics2D;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.geom.Rectangle2D;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Color;
 
 /**
  * A box representing a horizontal line.

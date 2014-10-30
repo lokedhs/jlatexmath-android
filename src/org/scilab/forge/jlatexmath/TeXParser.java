@@ -28,9 +28,8 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.lang.Character.UnicodeBlock;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Color;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -683,7 +682,7 @@ public class TeXParser {
                             pos++;
                         }
 
-                        formula.add(new MathAtom(new TeXFormula(this, getDollarGroup(DOLLAR), false).root, style));
+                        formula.add(new MathAtom(TeXFormula.make(this, getDollarGroup(DOLLAR), false).root, style));
                         if (doubleDollar) {
                             if (parseString.charAt(pos) == DOLLAR) {
                                 pos++;
@@ -980,7 +979,7 @@ public class TeXParser {
             return new EmptyAtom();
         }
         if (ch == L_GROUP) {
-            TeXFormula tf = new TeXFormula();
+            TeXFormula tf = TeXFormula.make();
             TeXFormula sformula = this.formula;
             this.formula = tf;
             pos++;
@@ -1092,9 +1091,9 @@ public class TeXParser {
     public Atom convertCharacter(char c, boolean oneChar) throws ParseException {
         if (ignoreWhiteSpace) {// The Unicode Greek letters in math mode are not drawn with the Greek font
             if (c >= 945 && c <= 969) {
-                return SymbolAtom.get(TeXFormula.symbolMappings[c]);
+                return SymbolAtom.get( TeXFormula.symbolMappings[c]);
             } else if (c >= 913 && c <= 937) {
-                return new TeXFormula(TeXFormula.symbolFormulaMappings[c]).root;
+                return TeXFormula.make( TeXFormula.symbolFormulaMappings[c]).root;
             }
         }
 
@@ -1109,8 +1108,8 @@ public class TeXParser {
             if (symbolName == null && (TeXFormula.symbolFormulaMappings == null || TeXFormula.symbolFormulaMappings[c] == null)) {
 		TeXFormula.FontInfos fontInfos = null;
 		boolean isLatin = Character.UnicodeBlock.BASIC_LATIN.equals(block);
-		if ((isLatin && TeXFormula.isRegisteredBlock(Character.UnicodeBlock.BASIC_LATIN)) || !isLatin) {
-		    fontInfos = TeXFormula.getExternalFont(block);
+		if ((isLatin && TeXFormula.isRegisteredBlock( Character.UnicodeBlock.BASIC_LATIN )) || !isLatin) {
+		    fontInfos = TeXFormula.getExternalFont( block );
 		}
                 if (fontInfos != null) {
                     if (oneChar) {
@@ -1133,16 +1132,16 @@ public class TeXParser {
                     throw new ParseException("Unknown character : '"
                                              + Character.toString(c) + "' (or " + ((int) c) + ")");
                 } else {
-                    return new ColorAtom(new RomanAtom(new TeXFormula("\\text{(Unknown char " + ((int) c) + ")}").root), null, Color.RED);
+                    return new ColorAtom(new RomanAtom(TeXFormula.make("\\text{(Unknown char " + ((int) c) + ")}").root), null, Color.RED);
                 }
             } else {
                 if (!ignoreWhiteSpace) {// we are in text mode
-                    if (TeXFormula.symbolTextMappings[c] != null) {
-                        return SymbolAtom.get(TeXFormula.symbolTextMappings[c]).setUnicode(c);
+                    if ( TeXFormula.symbolTextMappings[c] != null) {
+                        return SymbolAtom.get( TeXFormula.symbolTextMappings[c]).setUnicode(c);
                     }
                 }
-                if (TeXFormula.symbolFormulaMappings != null && TeXFormula.symbolFormulaMappings[c] != null) {
-                    return new TeXFormula(TeXFormula.symbolFormulaMappings[c]).root;
+                if ( TeXFormula.symbolFormulaMappings != null && TeXFormula.symbolFormulaMappings[c] != null) {
+                    return TeXFormula.make( TeXFormula.symbolFormulaMappings[c]).root;
                 }
 
                 try {
@@ -1216,7 +1215,7 @@ public class TeXParser {
             return processCommands(command);
 
         try {
-            return TeXFormula.get(command).root;
+            return TeXFormula.get( command ).root;
         } catch (FormulaNotFoundException e) {
             try {
                 return SymbolAtom.get(command);
@@ -1227,7 +1226,7 @@ public class TeXParser {
         if (!isPartial) {
             throw new ParseException("Unknown symbol or command or predefined TeXFormula: '" + command + "'");
         } else {
-            return new ColorAtom(new RomanAtom(new TeXFormula("\\backslash " + command).root), null, Color.RED);
+            return new ColorAtom(new RomanAtom(TeXFormula.make("\\backslash " + command).root), null, Color.RED);
         }
     }
 

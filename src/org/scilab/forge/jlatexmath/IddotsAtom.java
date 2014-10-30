@@ -36,7 +36,7 @@ public class IddotsAtom extends Atom {
     public IddotsAtom() { }
     
     public Box createBox(TeXEnvironment env) {
-	Box ldots = TeXFormula.get("ldots").root.createBox(env);
+	Box ldots = TeXFormula.get( "ldots" ).root.createBox(env);
 	float w = ldots.getWidth();
 	Box dot = SymbolAtom.get("ldotp").createBox(env);
 	HorizontalBox hb1 = new HorizontalBox(dot, w, TeXConstants.ALIGN_RIGHT);

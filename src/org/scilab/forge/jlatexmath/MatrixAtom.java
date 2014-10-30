@@ -28,7 +28,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.util.BitSet;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -176,7 +175,7 @@ public class MatrixAtom extends Atom {
                 break;
             case '@' :
                 pos++;
-                tf = new TeXFormula();
+                tf = TeXFormula.make();
                 tp = new TeXParser(isPartial, opt.substring(pos), tf, false);
                 Atom at = tp.getArgument();
                 matrix.col++;
@@ -190,7 +189,7 @@ public class MatrixAtom extends Atom {
                 break;
             case '*' :
                 pos++;
-                tf = new TeXFormula();
+                tf = TeXFormula.make();
                 tp = new TeXParser(isPartial, opt.substring(pos), tf, false);
                 String[] args = tp.getOptsArgs(2, 0);
                 pos += tp.getPos();

@@ -29,8 +29,8 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Color;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Graphics2D;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;

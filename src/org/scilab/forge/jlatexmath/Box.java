@@ -31,11 +31,11 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.Stroke;
-import java.awt.BasicStroke;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Color;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Graphics2D;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.geom.Rectangle2D;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Stroke;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.BasicStroke;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -103,7 +103,7 @@ public abstract class Box {
     /**
      * List of child boxes
      */
-    protected LinkedList<Box> children = new LinkedList<Box>();
+    protected LinkedList<Box> children = new LinkedList<>();
     protected Box parent;
     protected Box elderParent;
     protected Color markForDEBUG;

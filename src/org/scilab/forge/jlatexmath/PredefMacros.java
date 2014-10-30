@@ -28,8 +28,8 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Color;
-import java.awt.Font;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Color;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Font;
 import java.util.Map;
 import java.util.StringTokenizer;
 
@@ -121,28 +121,28 @@ public class PredefMacros {
     }
 
     public static final Atom st_macro(final TeXParser tp, final String[] args) throws ParseException {
-	return new StrikeThroughAtom(new TeXFormula(tp, args[1], false).root);
+	return new StrikeThroughAtom(TeXFormula.make(tp, args[1], false).root);
     }
 
     public static final Atom Braket_macro(final TeXParser tp, final String[] args) throws ParseException {
         String str = args[1].replaceAll("\\|", "\\\\middle\\\\vert ");
-        return new TeXFormula(tp, "\\left\\langle " + str + "\\right\\rangle").root;
+        return TeXFormula.make(tp, "\\left\\langle " + str + "\\right\\rangle").root;
     }
 
     public static final Atom Set_macro(final TeXParser tp, final String[] args) throws ParseException {
         String str = args[1].replaceFirst("\\|", "\\\\middle\\\\vert ");
-        return new TeXFormula(tp, "\\left\\{" + str + "\\right\\}").root;
+        return TeXFormula.make(tp, "\\left\\{" + str + "\\right\\}").root;
     }
 
     public static final Atom spATbreve_macro(final TeXParser tp, final String[] args) throws ParseException {
-        VRowAtom vra = new VRowAtom(new TeXFormula("\\displaystyle\\!\\breve{}").root);
+        VRowAtom vra = new VRowAtom(TeXFormula.make("\\displaystyle\\!\\breve{}").root);
         vra.setRaise(TeXConstants.UNIT_EX, 0.6f);
 
         return new SmashedAtom(vra, null);
     }
 
     public static final Atom spAThat_macro(final TeXParser tp, final String[] args) throws ParseException {
-        VRowAtom vra = new VRowAtom(new TeXFormula("\\displaystyle\\widehat{}").root);
+        VRowAtom vra = new VRowAtom(TeXFormula.make("\\displaystyle\\widehat{}").root);
         vra.setRaise(TeXConstants.UNIT_EX, 0.6f);
 
         return new SmashedAtom(vra, null);
@@ -173,11 +173,11 @@ public class PredefMacros {
     }
 
     public static final Atom clrlap_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new LapedAtom(new TeXFormula(tp, args[1]).root, args[0].charAt(0));
+        return new LapedAtom(TeXFormula.make(tp, args[1]).root, args[0].charAt(0));
     }
 
     public static final Atom mathclrlap_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new LapedAtom(new TeXFormula(tp, args[1]).root, args[0].charAt(4));
+        return new LapedAtom(TeXFormula.make(tp, args[1]).root, args[0].charAt(4));
     }
 
     public static final Atom includegraphics_macro(final TeXParser tp, final String[] args) throws ParseException {
@@ -210,8 +210,8 @@ public class PredefMacros {
         } else if ("l".equals(args[3])) {
             alig = TeXConstants.ALIGN_LEFT;
         }
-        TeXFormula num = new TeXFormula(tp, args[1], false);
-        TeXFormula denom = new TeXFormula(tp, args[2], false);
+        TeXFormula num = TeXFormula.make(tp, args[1], false);
+        TeXFormula denom = TeXFormula.make(tp, args[2], false);
         if (num.root == null || denom.root == null) {
             throw new ParseException("Both numerator and denominator of a fraction can't be empty!");
         }
@@ -222,16 +222,16 @@ public class PredefMacros {
     }
 
     public static final Atom frac_macro(final TeXParser tp, final String[] args) throws ParseException {
-        TeXFormula num = new TeXFormula(tp, args[1], false);
-        TeXFormula denom = new TeXFormula(tp, args[2], false);
+        TeXFormula num = TeXFormula.make(tp, args[1], false);
+        TeXFormula denom = TeXFormula.make(tp, args[2], false);
         if (num.root == null || denom.root == null)
             throw new ParseException("Both numerator and denominator of a fraction can't be empty!");
         return new FractionAtom(num.root, denom.root, true);
     }
 
     public static final Atom sfrac_macro(final TeXParser tp, final String[] args) throws ParseException {
-        TeXFormula num = new TeXFormula(tp, args[1], false);
-        TeXFormula denom = new TeXFormula(tp, args[2], false);
+        TeXFormula num = TeXFormula.make(tp, args[1], false);
+        TeXFormula denom = TeXFormula.make(tp, args[2], false);
         if (num.root == null || denom.root == null)
             throw new ParseException("Both numerator and denominator of a fraction can't be empty!");
 
@@ -264,13 +264,13 @@ public class PredefMacros {
     }
 
     public static final Atom genfrac_macro(final TeXParser tp, final String[] args) throws ParseException {
-        TeXFormula left = new TeXFormula(tp, args[1], false);
+        TeXFormula left = TeXFormula.make(tp, args[1], false);
         SymbolAtom L = null, R = null;
         if (left != null && left.root instanceof SymbolAtom) {
             L = (SymbolAtom) left.root;
         }
 
-        TeXFormula right = new TeXFormula(tp, args[2], false);
+        TeXFormula right = TeXFormula.make(tp, args[2], false);
         if (right != null && right.root instanceof SymbolAtom) {
             R = (SymbolAtom) right.root;
         }
@@ -286,8 +286,8 @@ public class PredefMacros {
         if (args[4].length() != 0) {
             style = Integer.parseInt(args[4]);
         }
-        TeXFormula num = new TeXFormula(tp, args[5], false);
-        TeXFormula denom = new TeXFormula(tp, args[6], false);
+        TeXFormula num = TeXFormula.make(tp, args[5], false);
+        TeXFormula denom = TeXFormula.make(tp, args[6], false);
         if (num.root == null || denom.root == null)
             throw new ParseException("Both numerator and denominator of a fraction can't be empty!");
         Atom at = new FractionAtom(num.root, denom.root, rule, (int) ths[0], ths[1]);
@@ -299,7 +299,7 @@ public class PredefMacros {
 
     public static final Atom over_macro(final TeXParser tp, final String[] args) throws ParseException {
         Atom num = tp.getFormulaAtom();
-        Atom denom = new TeXFormula(tp, tp.getOverArgument(), false).root;
+        Atom denom = TeXFormula.make(tp, tp.getOverArgument(), false).root;
         if (num == null || denom == null)
             throw new ParseException("Both numerator and denominator of a fraction can't be empty!");
         return new FractionAtom(num, denom, true);
@@ -307,15 +307,15 @@ public class PredefMacros {
 
     public static final Atom overwithdelims_macro(final TeXParser tp, final String[] args) throws ParseException {
         Atom num = tp.getFormulaAtom();
-        Atom denom = new TeXFormula(tp, tp.getOverArgument(), false).root;
+        Atom denom = TeXFormula.make(tp, tp.getOverArgument(), false).root;
 
         if (num == null || denom == null)
             throw new ParseException("Both numerator and denominator of a fraction can't be empty!");
 
-        Atom left = new TeXFormula(tp, args[1], false).root;
+        Atom left = TeXFormula.make(tp, args[1], false).root;
         if (left instanceof BigDelimiterAtom)
             left = ((BigDelimiterAtom)left).delim;
-        Atom right = new TeXFormula(tp, args[2], false).root;
+        Atom right = TeXFormula.make(tp, args[2], false).root;
         if (right instanceof BigDelimiterAtom)
             right = ((BigDelimiterAtom)right).delim;
         if (left instanceof SymbolAtom && right instanceof SymbolAtom) {
@@ -331,7 +331,7 @@ public class PredefMacros {
 
     public static final Atom atop_macro(final TeXParser tp, final String[] args) throws ParseException {
         Atom num = tp.getFormulaAtom();
-        Atom denom = new TeXFormula(tp, tp.getOverArgument(), false).root;
+        Atom denom = TeXFormula.make(tp, tp.getOverArgument(), false).root;
         if (num == null || denom == null)
             throw new ParseException("Both numerator and denominator of a fraction can't be empty!");
         return new FractionAtom(num, denom, false);
@@ -339,15 +339,15 @@ public class PredefMacros {
 
     public static final Atom atopwithdelims_macro(final TeXParser tp, final String[] args) throws ParseException {
         Atom num = tp.getFormulaAtom();
-        Atom denom = new TeXFormula(tp, tp.getOverArgument(), false).root;
+        Atom denom = TeXFormula.make(tp, tp.getOverArgument(), false).root;
 
         if (num == null || denom == null)
             throw new ParseException("Both numerator and denominator of a fraction can't be empty!");
 
-        Atom left = new TeXFormula(tp, args[1], false).root;
+        Atom left = TeXFormula.make(tp, args[1], false).root;
         if (left instanceof BigDelimiterAtom)
             left = ((BigDelimiterAtom)left).delim;
-        Atom right = new TeXFormula(tp, args[2], false).root;
+        Atom right = TeXFormula.make(tp, args[2], false).root;
         if (right instanceof BigDelimiterAtom)
             right = ((BigDelimiterAtom)right).delim;
         if (left instanceof SymbolAtom && right instanceof SymbolAtom) {
@@ -363,15 +363,15 @@ public class PredefMacros {
 
     public static final Atom choose_macro(final TeXParser tp, final String[] args) throws ParseException {
         Atom num = tp.getFormulaAtom();
-        Atom denom = new TeXFormula(tp, tp.getOverArgument(), false).root;
+        Atom denom = TeXFormula.make(tp, tp.getOverArgument(), false).root;
         if (num == null || denom == null)
             throw new ParseException("Both numerator and denominator of choose can't be empty!");
         return new FencedAtom(new FractionAtom(num, denom, false), new SymbolAtom("lbrack", TeXConstants.TYPE_OPENING, true), new SymbolAtom("rbrack", TeXConstants.TYPE_CLOSING, true));
     }
 
     public static final Atom binom_macro(final TeXParser tp, final String[] args) throws ParseException {
-        TeXFormula num = new TeXFormula(tp, args[1], false);
-        TeXFormula denom = new TeXFormula(tp, args[2], false);
+        TeXFormula num = TeXFormula.make(tp, args[1], false);
+        TeXFormula denom = TeXFormula.make(tp, args[2], false);
         if (num.root == null || denom.root == null)
             throw new ParseException("Both binomial coefficients must be not empty !!");
         return new FencedAtom(new FractionAtom(num.root, denom.root, false), new SymbolAtom("lbrack", TeXConstants.TYPE_OPENING, true), new SymbolAtom("rbrack", TeXConstants.TYPE_CLOSING, true));
@@ -380,7 +380,7 @@ public class PredefMacros {
     public static final Atom above_macro(final TeXParser tp, final String[] args) throws ParseException {
         Atom num = tp.getFormulaAtom();
         float[] dim = tp.getLength();
-        Atom denom = new TeXFormula(tp, tp.getOverArgument(), false).root;
+        Atom denom = TeXFormula.make(tp, tp.getOverArgument(), false).root;
         if (dim == null || dim.length != 2) {
             throw new ParseException("Invalid length in above macro");
         }
@@ -393,17 +393,17 @@ public class PredefMacros {
     public static final Atom abovewithdelims_macro(final TeXParser tp, final String[] args) throws ParseException {
         Atom num = tp.getFormulaAtom();
         float[] dim = tp.getLength();
-        Atom denom = new TeXFormula(tp, tp.getOverArgument(), false).root;
+        Atom denom = TeXFormula.make(tp, tp.getOverArgument(), false).root;
         if (dim == null || dim.length != 2) {
             throw new ParseException("Invalid length in above macro");
         }
         if (num == null || denom == null)
             throw new ParseException("Both numerator and denominator of a fraction can't be empty!");
 
-        Atom left = new TeXFormula(tp, args[1], false).root;
+        Atom left = TeXFormula.make(tp, args[1], false).root;
         if (left instanceof BigDelimiterAtom)
             left = ((BigDelimiterAtom)left).delim;
-        Atom right = new TeXFormula(tp, args[2], false).root;
+        Atom right = TeXFormula.make(tp, args[2], false).root;
         if (right instanceof BigDelimiterAtom)
             right = ((BigDelimiterAtom)right).delim;
         if (left instanceof SymbolAtom && right instanceof SymbolAtom) {
@@ -424,7 +424,7 @@ public class PredefMacros {
         else if ("Bbb".equals(args[0]))
             style = "mathbb";
         else if ("bold".equals(args[0]))
-            return new BoldAtom(new TeXFormula(tp, args[1], false).root);
+            return new BoldAtom(TeXFormula.make(tp, args[1], false).root);
         else if ("cal".equals(args[0]))
             style = "mathcal";
 
@@ -432,7 +432,7 @@ public class PredefMacros {
         if (fontInfos != null) {
             TeXFormula.externalFontMap.put(Character.UnicodeBlock.BASIC_LATIN, null);
         }
-        Atom at = new TeXFormula(tp, args[1], false).root;
+        Atom at = TeXFormula.make(tp, args[1], false).root;
         if (fontInfos != null) {
             TeXFormula.externalFontMap.put(Character.UnicodeBlock.BASIC_LATIN, fontInfos);
         }
@@ -441,12 +441,12 @@ public class PredefMacros {
     }
 
     public static final Atom mbox_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom group = new RomanAtom(new TeXFormula(tp, args[1], "mathnormal", false, false).root);
+        Atom group = new RomanAtom(TeXFormula.make(tp, args[1], "mathnormal", false, false).root);
         return new StyleAtom(TeXConstants.STYLE_TEXT, group);
     }
 
     public static final Atom text_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new RomanAtom(new TeXFormula(tp, args[1], "mathnormal", false, false).root);
+        return new RomanAtom(TeXFormula.make(tp, args[1], "mathnormal", false, false).root);
     }
 
     public static final Atom underscore_macro(final TeXParser tp, final String[] args) throws ParseException {
@@ -454,15 +454,15 @@ public class PredefMacros {
     }
 
     public static final Atom accent_macros(final TeXParser tp, final String[] args) throws ParseException {
-        return new AccentedAtom(new TeXFormula(tp, args[1], false).root, args[0]);
+        return new AccentedAtom(TeXFormula.make(tp, args[1], false).root, args[0]);
     }
 
     public static final Atom grkaccent_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new AccentedAtom(new TeXFormula(tp, args[2], false).root, new TeXFormula(tp, args[1], false).root, false);
+        return new AccentedAtom(TeXFormula.make(tp, args[2], false).root, TeXFormula.make(tp, args[1], false).root, false);
     }
 
     public static final Atom accent_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new AccentedAtom(new TeXFormula(tp, args[2], false).root, new TeXFormula(tp, args[1], false).root);
+        return new AccentedAtom(TeXFormula.make(tp, args[2], false).root, TeXFormula.make(tp, args[1], false).root);
     }
 
     public static final Atom accentbis_macros(final TeXParser tp, final String[] args) throws ParseException {
@@ -508,11 +508,11 @@ public class PredefMacros {
             acc = "cyrbreve";
         }
 
-        return new AccentedAtom(new TeXFormula(tp, args[1], false).root, acc);
+        return new AccentedAtom(TeXFormula.make(tp, args[1], false).root, acc);
     }
 
     public static final Atom cedilla_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new CedillaAtom(new TeXFormula(tp, args[1]).root);
+        return new CedillaAtom(TeXFormula.make(tp, args[1]).root);
     }
 
     public static final Atom IJ_macro(final TeXParser tp, final String[] args) throws ParseException {
@@ -532,7 +532,7 @@ public class PredefMacros {
     }
 
     public static final Atom ogonek_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new OgonekAtom(new TeXFormula(tp, args[1]).root);
+        return new OgonekAtom(TeXFormula.make(tp, args[1]).root);
     }
 
     public static final Atom nbsp_macro(final TeXParser tp, final String[] args) throws ParseException {
@@ -541,45 +541,45 @@ public class PredefMacros {
 
     public static final Atom sqrt_macro(final TeXParser tp, final String[] args) throws ParseException {
         if (args[2] == null)
-            return new NthRoot(new TeXFormula(tp, args[1], false).root, null);
-        return new NthRoot(new TeXFormula(tp, args[1], false).root, new TeXFormula(tp, args[2], false).root);
+            return new NthRoot(TeXFormula.make(tp, args[1], false).root, null);
+        return new NthRoot(TeXFormula.make(tp, args[1], false).root, TeXFormula.make(tp, args[2], false).root);
     }
 
     public static final Atom overrightarrow_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new UnderOverArrowAtom(new TeXFormula(tp, args[1], false).root, false, true);
+        return new UnderOverArrowAtom(TeXFormula.make(tp, args[1], false).root, false, true);
     }
 
     public static final Atom overleftarrow_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new UnderOverArrowAtom(new TeXFormula(tp, args[1], false).root, true, true);
+        return new UnderOverArrowAtom(TeXFormula.make(tp, args[1], false).root, true, true);
     }
 
     public static final Atom overleftrightarrow_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new UnderOverArrowAtom(new TeXFormula(tp, args[1], false).root, true);
+        return new UnderOverArrowAtom(TeXFormula.make(tp, args[1], false).root, true);
     }
 
     public static final Atom underrightarrow_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new UnderOverArrowAtom(new TeXFormula(tp, args[1], false).root, false, false);
+        return new UnderOverArrowAtom(TeXFormula.make(tp, args[1], false).root, false, false);
     }
 
     public static final Atom underleftarrow_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new UnderOverArrowAtom(new TeXFormula(tp, args[1], false).root, true, false);
+        return new UnderOverArrowAtom(TeXFormula.make(tp, args[1], false).root, true, false);
     }
 
     public static final Atom underleftrightarrow_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new UnderOverArrowAtom(new TeXFormula(tp, args[1], false).root, false);
+        return new UnderOverArrowAtom(TeXFormula.make(tp, args[1], false).root, false);
     }
 
     public static final Atom xleftarrow_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new XArrowAtom(new TeXFormula(tp, args[1], false).root, new TeXFormula(tp, args[2]).root, true);
+        return new XArrowAtom(TeXFormula.make(tp, args[1], false).root, TeXFormula.make(tp, args[2]).root, true);
     }
 
     public static final Atom xrightarrow_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new XArrowAtom(new TeXFormula(tp, args[1], false).root, new TeXFormula(tp, args[2]).root, false);
+        return new XArrowAtom(TeXFormula.make(tp, args[1], false).root, TeXFormula.make(tp, args[2]).root, false);
     }
 
     public static final Atom sideset_macro(final TeXParser tp, final String[] args) throws ParseException {
-        TeXFormula tf = new TeXFormula();
-        tf.add(new PhantomAtom(new TeXFormula(tp, args[3]).root, false, true, true));
+        TeXFormula tf = TeXFormula.make();
+        tf.add(new PhantomAtom(TeXFormula.make(tp, args[3]).root, false, true, true));
         tf.append(tp.getIsPartial(), args[1]);
         tf.add(new SpaceAtom(TeXConstants.UNIT_MU, -0.3f, 0f, 0f));
         tf.append(tp.getIsPartial(), args[3] + "\\nolimits" + args[2]);
@@ -587,76 +587,76 @@ public class PredefMacros {
     }
 
     public static final Atom prescript_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom base = new TeXFormula(tp, args[3]).root;
-        tp.addAtom(new ScriptsAtom(new PhantomAtom(base, false, true, true), new TeXFormula(tp, args[2]).root, new TeXFormula(tp, args[1]).root, false));
+        Atom base = TeXFormula.make(tp, args[3]).root;
+        tp.addAtom(new ScriptsAtom(new PhantomAtom(base, false, true, true), TeXFormula.make(tp, args[2]).root, TeXFormula.make(tp, args[1]).root, false));
         tp.addAtom(new SpaceAtom(TeXConstants.UNIT_MU, -0.3f, 0f, 0f));
         return new TypedAtom(TeXConstants.TYPE_ORDINARY, TeXConstants.TYPE_ORDINARY, base);
     }
 
     public static final Atom underbrace_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new OverUnderDelimiter(new TeXFormula(tp, args[1], false).root, null, SymbolAtom.get("rbrace"), TeXConstants.UNIT_EX, 0, false);
+        return new OverUnderDelimiter(TeXFormula.make(tp, args[1], false).root, null, SymbolAtom.get("rbrace"), TeXConstants.UNIT_EX, 0, false);
     }
 
     public static final Atom overbrace_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new OverUnderDelimiter(new TeXFormula(tp, args[1], false).root, null, SymbolAtom.get("lbrace"), TeXConstants.UNIT_EX, 0, true);
+        return new OverUnderDelimiter(TeXFormula.make(tp, args[1], false).root, null, SymbolAtom.get("lbrace"), TeXConstants.UNIT_EX, 0, true);
     }
 
     public static final Atom underbrack_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new OverUnderDelimiter(new TeXFormula(tp, args[1], false).root, null, SymbolAtom.get("rsqbrack"), TeXConstants.UNIT_EX, 0, false);
+        return new OverUnderDelimiter(TeXFormula.make(tp, args[1], false).root, null, SymbolAtom.get("rsqbrack"), TeXConstants.UNIT_EX, 0, false);
     }
 
     public static final Atom overbrack_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new OverUnderDelimiter(new TeXFormula(tp, args[1], false).root, null, SymbolAtom.get("lsqbrack"), TeXConstants.UNIT_EX, 0, true);
+        return new OverUnderDelimiter(TeXFormula.make(tp, args[1], false).root, null, SymbolAtom.get("lsqbrack"), TeXConstants.UNIT_EX, 0, true);
     }
 
     public static final Atom underparen_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new OverUnderDelimiter(new TeXFormula(tp, args[1], false).root, null, SymbolAtom.get("rbrack"), TeXConstants.UNIT_EX, 0, false);
+        return new OverUnderDelimiter(TeXFormula.make(tp, args[1], false).root, null, SymbolAtom.get("rbrack"), TeXConstants.UNIT_EX, 0, false);
     }
 
     public static final Atom overparen_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new OverUnderDelimiter(new TeXFormula(tp, args[1], false).root, null, SymbolAtom.get("lbrack"), TeXConstants.UNIT_EX, 0, true);
+        return new OverUnderDelimiter(TeXFormula.make(tp, args[1], false).root, null, SymbolAtom.get("lbrack"), TeXConstants.UNIT_EX, 0, true);
     }
 
     public static final Atom overline_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new OverlinedAtom(new TeXFormula(tp, args[1], false).root);
+        return new OverlinedAtom(TeXFormula.make(tp, args[1], false).root);
     }
 
     public static final Atom underline_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new UnderlinedAtom(new TeXFormula(tp, args[1], false).root);
+        return new UnderlinedAtom(TeXFormula.make(tp, args[1], false).root);
     }
 
     public static final Atom mathop_macro(final TeXParser tp, final String[] args) throws ParseException {
-        TypedAtom at =  new TypedAtom(TeXConstants.TYPE_BIG_OPERATOR, TeXConstants.TYPE_BIG_OPERATOR, new TeXFormula(tp, args[1], false).root);
+        TypedAtom at =  new TypedAtom(TeXConstants.TYPE_BIG_OPERATOR, TeXConstants.TYPE_BIG_OPERATOR, TeXFormula.make(tp, args[1], false).root);
         at.type_limits = TeXConstants.SCRIPT_NORMAL;
         return at;
     }
 
     public static final Atom mathpunct_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new TypedAtom(TeXConstants.TYPE_PUNCTUATION, TeXConstants.TYPE_PUNCTUATION, new TeXFormula(tp, args[1], false).root);
+        return new TypedAtom(TeXConstants.TYPE_PUNCTUATION, TeXConstants.TYPE_PUNCTUATION, TeXFormula.make(tp, args[1], false).root);
     }
 
     public static final Atom mathord_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new TypedAtom(TeXConstants.TYPE_ORDINARY, TeXConstants.TYPE_ORDINARY, new TeXFormula(tp, args[1], false).root);
+        return new TypedAtom(TeXConstants.TYPE_ORDINARY, TeXConstants.TYPE_ORDINARY, TeXFormula.make(tp, args[1], false).root);
     }
 
     public static final Atom mathrel_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, new TeXFormula(tp, args[1], false).root);
+        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, TeXFormula.make(tp, args[1], false).root);
     }
 
     public static final Atom mathinner_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new TypedAtom(TeXConstants.TYPE_INNER, TeXConstants.TYPE_INNER, new TeXFormula(tp, args[1], false).root);
+        return new TypedAtom(TeXConstants.TYPE_INNER, TeXConstants.TYPE_INNER, TeXFormula.make(tp, args[1], false).root);
     }
 
     public static final Atom mathbin_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new TypedAtom(TeXConstants.TYPE_BINARY_OPERATOR, TeXConstants.TYPE_BINARY_OPERATOR, new TeXFormula(tp, args[1], false).root);
+        return new TypedAtom(TeXConstants.TYPE_BINARY_OPERATOR, TeXConstants.TYPE_BINARY_OPERATOR, TeXFormula.make(tp, args[1], false).root);
     }
 
     public static final Atom mathopen_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new TypedAtom(TeXConstants.TYPE_OPENING, TeXConstants.TYPE_OPENING, new TeXFormula(tp, args[1], false).root);
+        return new TypedAtom(TeXConstants.TYPE_OPENING, TeXConstants.TYPE_OPENING, TeXFormula.make(tp, args[1], false).root);
     }
 
     public static final Atom mathclose_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new TypedAtom(TeXConstants.TYPE_CLOSING, TeXConstants.TYPE_CLOSING, new TeXFormula(tp, args[1], false).root);
+        return new TypedAtom(TeXConstants.TYPE_CLOSING, TeXConstants.TYPE_CLOSING, TeXFormula.make(tp, args[1], false).root);
     }
 
     public static final Atom joinrel_macro(final TeXParser tp, final String[] args) throws ParseException {
@@ -664,7 +664,7 @@ public class PredefMacros {
     }
 
     public static final Atom smash_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new SmashedAtom(new TeXFormula(tp, args[1], false).root, args[2]);
+        return new SmashedAtom(TeXFormula.make(tp, args[1], false).root, args[2]);
     }
 
     public static final Atom vdots_macro(final TeXParser tp, final String[] args) throws ParseException {
@@ -699,36 +699,36 @@ public class PredefMacros {
 
     public static final Atom left_macro(final TeXParser tp, final String[] args) throws ParseException {
         String grp = tp.getGroup("\\left", "\\right");
-        Atom left = new TeXFormula(tp, args[1], false).root;
+        Atom left = TeXFormula.make(tp, args[1], false).root;
         if (left instanceof BigDelimiterAtom)
             left = ((BigDelimiterAtom)left).delim;
         Atom right = tp.getArgument();
         if (right instanceof BigDelimiterAtom)
             right = ((BigDelimiterAtom)right).delim;
         if (left instanceof SymbolAtom && right instanceof SymbolAtom) {
-            TeXFormula tf = new TeXFormula(tp, grp, false);
+            TeXFormula tf = TeXFormula.make(tp, grp, false);
             return new FencedAtom(tf.root, (SymbolAtom)left, tf.middle, (SymbolAtom)right);
         }
 
         RowAtom ra = new RowAtom();
         ra.add(left);
-        ra.add(new TeXFormula(tp, grp, false).root);
+        ra.add(TeXFormula.make(tp, grp, false).root);
         ra.add(right);
         return ra;
     }
 
     public static final Atom leftparenthesis_macro(final TeXParser tp, final String[] args) throws ParseException {
         String grp = tp.getGroup("\\(", "\\)");
-        return new MathAtom(new TeXFormula(tp, grp, false).root, TeXConstants.STYLE_TEXT);
+        return new MathAtom(TeXFormula.make(tp, grp, false).root, TeXConstants.STYLE_TEXT);
     }
 
     public static final Atom leftbracket_macro(final TeXParser tp, final String[] args) throws ParseException {
         String grp = tp.getGroup("\\[", "\\]");
-        return new MathAtom(new TeXFormula(tp, grp, false).root, TeXConstants.STYLE_DISPLAY);
+        return new MathAtom(TeXFormula.make(tp, grp, false).root, TeXConstants.STYLE_DISPLAY);
     }
 
     public static final Atom middle_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new MiddleAtom(new TeXFormula(tp, args[1]).root);
+        return new MiddleAtom(TeXFormula.make(tp, args[1]).root);
     }
 
     public static final Atom cr_macro(final TeXParser tp, final String[] args) throws ParseException {
@@ -759,7 +759,7 @@ public class PredefMacros {
 
         String str = args[1].replaceAll("\\^\\{\\\\prime\\}", "\'");
         str = str.replaceAll("\\^\\{\\\\prime\\\\prime\\}", "\'\'");
-        Atom at = new RomanAtom(new TeXFormula(tp, str, "mathnormal", false, false).root);
+        Atom at = new RomanAtom(TeXFormula.make(tp, str, "mathnormal", false, false).root);
         at.type = TeXConstants.TYPE_INTERTEXT;
         tp.addAtom(at);
         tp.addRow();
@@ -784,7 +784,7 @@ public class PredefMacros {
 
     public static final Atom multicolumn_macro(final TeXParser tp, final String[] args) throws ParseException {
         int n = Integer.parseInt(args[1]);
-        tp.addAtom(new MulticolumnAtom(n, args[2], new TeXFormula(tp, args[3]).root));
+        tp.addAtom(new MulticolumnAtom(n, args[2], TeXFormula.make(tp, args[3]).root));
         ((ArrayOfAtoms)tp.formula).addCol(n);
         return null;
     }
@@ -904,13 +904,13 @@ public class PredefMacros {
     }
 
     public static final Atom shoveright_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom at = new TeXFormula(tp, args[1]).root;
+        Atom at = TeXFormula.make(tp, args[1]).root;
         at.alignment = TeXConstants.ALIGN_RIGHT;
         return at;
     }
 
     public static final Atom shoveleft_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom at = new TeXFormula(tp, args[1]).root;
+        Atom at = TeXFormula.make(tp, args[1]).root;
         at.alignment = TeXConstants.ALIGN_LEFT;
         return at;
     }
@@ -988,84 +988,84 @@ public class PredefMacros {
     }
 
     public static final Atom fbox_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new FBoxAtom(new TeXFormula(tp, args[1], false).root);
+        return new FBoxAtom(TeXFormula.make(tp, args[1], false).root);
     }
 
     public static final Atom stackrel_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom at = new UnderOverAtom(new TeXFormula(tp, args[2], false).root, new TeXFormula(tp, args[3], false).root, TeXConstants.UNIT_MU, 0.5f, true, new TeXFormula(tp, args[1], false).root, TeXConstants.UNIT_MU, 2.5f, true);
+        Atom at = new UnderOverAtom(TeXFormula.make(tp, args[2], false).root, TeXFormula.make(tp, args[3], false).root, TeXConstants.UNIT_MU, 0.5f, true, TeXFormula.make(tp, args[1], false).root, TeXConstants.UNIT_MU, 2.5f, true);
         return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);
     }
 
     public static final Atom stackbin_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom at = new UnderOverAtom(new TeXFormula(tp, args[2], false).root, new TeXFormula(tp, args[3], false).root, TeXConstants.UNIT_MU, 0.5f, true, new TeXFormula(tp, args[1], false).root, TeXConstants.UNIT_MU, 2.5f, true);
+        Atom at = new UnderOverAtom(TeXFormula.make(tp, args[2], false).root, TeXFormula.make(tp, args[3], false).root, TeXConstants.UNIT_MU, 0.5f, true, TeXFormula.make(tp, args[1], false).root, TeXConstants.UNIT_MU, 2.5f, true);
         return new TypedAtom(TeXConstants.TYPE_BINARY_OPERATOR, TeXConstants.TYPE_BINARY_OPERATOR, at);
     }
 
     public static final Atom overset_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom at = new UnderOverAtom(new TeXFormula(tp, args[2], false).root, new TeXFormula(tp, args[1], false).root, TeXConstants.UNIT_MU, 2.5f, true, true);
+        Atom at = new UnderOverAtom(TeXFormula.make(tp, args[2], false).root, TeXFormula.make(tp, args[1], false).root, TeXConstants.UNIT_MU, 2.5f, true, true);
         return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);
     }
 
     public static final Atom underset_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom at = new UnderOverAtom(new TeXFormula(tp, args[2], false).root, new TeXFormula(tp, args[1], false).root, TeXConstants.UNIT_MU, 0.5f, true, false);
+        Atom at = new UnderOverAtom(TeXFormula.make(tp, args[2], false).root, TeXFormula.make(tp, args[1], false).root, TeXConstants.UNIT_MU, 0.5f, true, false);
         return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);
     }
 
     public static final Atom accentset_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new AccentedAtom(new TeXFormula(tp, args[2], false).root, new TeXFormula(tp, args[1], false).root);
+        return new AccentedAtom(TeXFormula.make(tp, args[2], false).root, TeXFormula.make(tp, args[1], false).root);
     }
 
     public static final Atom underaccent_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new UnderOverAtom(new TeXFormula(tp, args[2], false).root, new TeXFormula(tp, args[1], false).root, TeXConstants.UNIT_MU, 0.3f, true, false);
+        return new UnderOverAtom(TeXFormula.make(tp, args[2], false).root, TeXFormula.make(tp, args[1], false).root, TeXConstants.UNIT_MU, 0.3f, true, false);
     }
 
     public static final Atom undertilde_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom at = new TeXFormula(tp, args[1], false).root;
+        Atom at = TeXFormula.make(tp, args[1], false).root;
         return new UnderOverAtom(at, new AccentedAtom(new PhantomAtom(at, true, false, false), "widetilde"), TeXConstants.UNIT_MU, 0.3f, true, false);
     }
 
     public static final Atom boldsymbol_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new BoldAtom(new TeXFormula(tp, args[1], false).root);
+        return new BoldAtom(TeXFormula.make(tp, args[1], false).root);
     }
 
     public static final Atom mathrm_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new RomanAtom(new TeXFormula(tp, args[1], false).root);
+        return new RomanAtom(TeXFormula.make(tp, args[1], false).root);
     }
 
     public static final Atom rm_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new RomanAtom(new TeXFormula(tp, tp.getOverArgument(), null, false, tp.isIgnoreWhiteSpace()).root);
+        return new RomanAtom(TeXFormula.make(tp, tp.getOverArgument(), null, false, tp.isIgnoreWhiteSpace()).root);
     }
 
     public static final Atom mathbf_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new BoldAtom(new RomanAtom(new TeXFormula(tp, args[1], false).root));
+        return new BoldAtom(new RomanAtom(TeXFormula.make(tp, args[1], false).root));
     }
 
     public static final Atom bf_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new BoldAtom(new RomanAtom(new TeXFormula(tp, tp.getOverArgument(), null, false, tp.isIgnoreWhiteSpace()).root));
+        return new BoldAtom(new RomanAtom(TeXFormula.make(tp, tp.getOverArgument(), null, false, tp.isIgnoreWhiteSpace()).root));
     }
 
     public static final Atom mathtt_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new TtAtom(new TeXFormula(tp, args[1], false).root);
+        return new TtAtom(TeXFormula.make(tp, args[1], false).root);
     }
 
     public static final Atom tt_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new TtAtom(new TeXFormula(tp, tp.getOverArgument(), null, false, tp.isIgnoreWhiteSpace()).root);
+        return new TtAtom(TeXFormula.make(tp, tp.getOverArgument(), null, false, tp.isIgnoreWhiteSpace()).root);
     }
 
     public static final Atom mathit_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new ItAtom(new TeXFormula(tp, args[1], false).root);
+        return new ItAtom(TeXFormula.make(tp, args[1], false).root);
     }
 
     public static final Atom it_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new ItAtom(new TeXFormula(tp, tp.getOverArgument(), null, false, tp.isIgnoreWhiteSpace()).root);
+        return new ItAtom(TeXFormula.make(tp, tp.getOverArgument(), null, false, tp.isIgnoreWhiteSpace()).root);
     }
 
     public static final Atom mathsf_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new SsAtom(new TeXFormula(tp, args[1], false).root);
+        return new SsAtom(TeXFormula.make(tp, args[1], false).root);
     }
 
     public static final Atom sf_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new SsAtom(new TeXFormula(tp, tp.getOverArgument(), null, false, tp.isIgnoreWhiteSpace()).root);
+        return new SsAtom(TeXFormula.make(tp, tp.getOverArgument(), null, false, tp.isIgnoreWhiteSpace()).root);
     }
 
     public static final Atom LaTeX_macro(final TeXParser tp, final String[] args) throws ParseException {
@@ -1073,26 +1073,26 @@ public class PredefMacros {
     }
 
     public static final Atom GeoGebra_macro(final TeXParser tp, final String[] args) throws ParseException {
-        TeXFormula tf = new TeXFormula("\\mathbb{G}\\mathsf{e}");
+        TeXFormula tf = TeXFormula.make("\\mathbb{G}\\mathsf{e}");
         tf.add(new GeoGebraLogoAtom());
         tf.add("\\mathsf{Gebra}");
         return new ColorAtom(tf.root, null, new Color(102, 102, 102));
     }
 
     public static final Atom hphantom_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new PhantomAtom(new TeXFormula(tp, args[1], false).root, true, false, false);
+        return new PhantomAtom(TeXFormula.make(tp, args[1], false).root, true, false, false);
     }
 
     public static final Atom vphantom_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new PhantomAtom(new TeXFormula(tp, args[1], false).root, false, true, true);
+        return new PhantomAtom(TeXFormula.make(tp, args[1], false).root, false, true, true);
     }
 
     public static final Atom phantom_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new PhantomAtom(new TeXFormula(tp, args[1], false).root, true, true, true);
+        return new PhantomAtom(TeXFormula.make(tp, args[1], false).root, true, true, true);
     }
 
     public static final Atom big_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom at = new TeXFormula(tp, args[1], false).root;
+        Atom at = TeXFormula.make(tp, args[1], false).root;
         if (!(at instanceof SymbolAtom)) {
             return at;
         }
@@ -1100,7 +1100,7 @@ public class PredefMacros {
     }
 
     public static final Atom Big_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom at = new TeXFormula(tp, args[1], false).root;
+        Atom at = TeXFormula.make(tp, args[1], false).root;
         if (!(at instanceof SymbolAtom)) {
             return at;
         }
@@ -1108,7 +1108,7 @@ public class PredefMacros {
     }
 
     public static final Atom bigg_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom at = new TeXFormula(tp, args[1], false).root;
+        Atom at = TeXFormula.make(tp, args[1], false).root;
         if (!(at instanceof SymbolAtom)) {
             return at;
         }
@@ -1116,7 +1116,7 @@ public class PredefMacros {
     }
 
     public static final Atom Bigg_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom at = new TeXFormula(tp, args[1], false).root;
+        Atom at = TeXFormula.make(tp, args[1], false).root;
         if (!(at instanceof SymbolAtom)) {
             return at;
         }
@@ -1124,7 +1124,7 @@ public class PredefMacros {
     }
 
     public static final Atom bigl_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom at = new TeXFormula(tp, args[1], false).root;
+        Atom at = TeXFormula.make(tp, args[1], false).root;
         if (!(at instanceof SymbolAtom)) {
             return at;
         }
@@ -1134,7 +1134,7 @@ public class PredefMacros {
     }
 
     public static final Atom Bigl_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom at = new TeXFormula(tp, args[1], false).root;
+        Atom at = TeXFormula.make(tp, args[1], false).root;
         if (!(at instanceof SymbolAtom)) {
             return at;
         }
@@ -1144,7 +1144,7 @@ public class PredefMacros {
     }
 
     public static final Atom biggl_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom at = new TeXFormula(tp, args[1], false).root;
+        Atom at = TeXFormula.make(tp, args[1], false).root;
         if (!(at instanceof SymbolAtom)) {
             return at;
         }
@@ -1154,7 +1154,7 @@ public class PredefMacros {
     }
 
     public static final Atom Biggl_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom at = new TeXFormula(tp, args[1], false).root;
+        Atom at = TeXFormula.make(tp, args[1], false).root;
         if (!(at instanceof SymbolAtom)) {
             return at;
         }
@@ -1164,7 +1164,7 @@ public class PredefMacros {
     }
 
     public static final Atom bigr_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom at = new TeXFormula(tp, args[1], false).root;
+        Atom at = TeXFormula.make(tp, args[1], false).root;
         if (!(at instanceof SymbolAtom)) {
             return at;
         }
@@ -1174,7 +1174,7 @@ public class PredefMacros {
     }
 
     public static final Atom Bigr_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom at = new TeXFormula(tp, args[1], false).root;
+        Atom at = TeXFormula.make(tp, args[1], false).root;
         if (!(at instanceof SymbolAtom)) {
             return at;
         }
@@ -1184,7 +1184,7 @@ public class PredefMacros {
     }
 
     public static final Atom biggr_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom at = new TeXFormula(tp, args[1], false).root;
+        Atom at = TeXFormula.make(tp, args[1], false).root;
         if (!(at instanceof SymbolAtom)) {
             return at;
         }
@@ -1194,7 +1194,7 @@ public class PredefMacros {
     }
 
     public static final Atom Biggr_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom at = new TeXFormula(tp, args[1], false).root;
+        Atom at = TeXFormula.make(tp, args[1], false).root;
         if (!(at instanceof SymbolAtom)) {
             return at;
         }
@@ -1204,39 +1204,39 @@ public class PredefMacros {
     }
 
     public static final Atom displaystyle_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom group = new TeXFormula(tp, tp.getOverArgument(), false).root;
+        Atom group = TeXFormula.make(tp, tp.getOverArgument(), false).root;
         return new StyleAtom(TeXConstants.STYLE_DISPLAY, group);
     }
 
     public static final Atom scriptstyle_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom group = new TeXFormula(tp, tp.getOverArgument(), false).root;
+        Atom group = TeXFormula.make(tp, tp.getOverArgument(), false).root;
         return new StyleAtom(TeXConstants.STYLE_SCRIPT, group);
     }
 
     public static final Atom textstyle_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom group = new TeXFormula(tp, tp.getOverArgument(), false).root;
+        Atom group = TeXFormula.make(tp, tp.getOverArgument(), false).root;
         return new StyleAtom(TeXConstants.STYLE_TEXT, group);
     }
 
     public static final Atom scriptscriptstyle_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Atom group = new TeXFormula(tp, tp.getOverArgument(), false).root;
+        Atom group = TeXFormula.make(tp, tp.getOverArgument(), false).root;
         return new StyleAtom(TeXConstants.STYLE_SCRIPT_SCRIPT, group);
     }
 
     public static final Atom rotatebox_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new RotateAtom(new TeXFormula(tp, args[2]).root, args[1] == null ? 0 : Double.parseDouble(args[1]), args[3]);
+        return new RotateAtom(TeXFormula.make(tp, args[2]).root, args[1] == null ? 0 : Double.parseDouble(args[1]), args[3]);
     }
 
     public static final Atom reflectbox_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new ReflectAtom(new TeXFormula(tp, args[1]).root);
+        return new ReflectAtom(TeXFormula.make(tp, args[1]).root);
     }
 
     public static final Atom scalebox_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new ScaleAtom(new TeXFormula(tp, args[2]).root, Double.parseDouble(args[1]), args[3] == null ? Double.parseDouble(args[1]) : Double.parseDouble(args[3]));
+        return new ScaleAtom(TeXFormula.make(tp, args[2]).root, Double.parseDouble(args[1]), args[3] == null ? Double.parseDouble(args[1]) : Double.parseDouble(args[3]));
     }
 
     public static final Atom resizebox_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new ResizeAtom(new TeXFormula(tp, args[3]).root, args[1], args[2], args[1].equals("!") || args[2].equals("!"));
+        return new ResizeAtom(TeXFormula.make(tp, args[3]).root, args[1], args[2], args[1].equals("!") || args[2].equals("!"));
     }
 
     public static final Atom raisebox_macro(final TeXParser tp, final String[] args) throws ParseException {
@@ -1253,19 +1253,19 @@ public class PredefMacros {
             depth = new float[]{-1, 0};
         }
 
-        return new RaiseAtom(new TeXFormula(tp, args[2]).root, (int) raise[0], raise[1], (int) height[0], height[1], (int) depth[0], depth[1]);
+        return new RaiseAtom(TeXFormula.make(tp, args[2]).root, (int) raise[0], raise[1], (int) height[0], height[1], (int) depth[0], depth[1]);
     }
 
     public static final Atom shadowbox_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new ShadowAtom(new TeXFormula(tp, args[1]).root);
+        return new ShadowAtom(TeXFormula.make(tp, args[1]).root);
     }
 
     public static final Atom ovalbox_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new OvalAtom(new TeXFormula(tp, args[1]).root);
+        return new OvalAtom(TeXFormula.make(tp, args[1]).root);
     }
 
     public static final Atom doublebox_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new DoubleFramedAtom(new TeXFormula(tp, args[1]).root);
+        return new DoubleFramedAtom(TeXFormula.make(tp, args[1]).root);
     }
 
     public static final Atom definecolor_macro(final TeXParser tp, final String[] args) throws ParseException {
@@ -1299,7 +1299,7 @@ public class PredefMacros {
 
     public static final Atom fgcolor_macro(final TeXParser tp, final String[] args) throws ParseException {
         try {
-            return new ColorAtom(new TeXFormula(tp, args[2]).root, null, ColorAtom.getColor(args[1]));
+            return new ColorAtom(TeXFormula.make(tp, args[2]).root, null, ColorAtom.getColor(args[1]));
         } catch (NumberFormatException e) {
             throw new ParseException(e.toString());
         }
@@ -1307,23 +1307,23 @@ public class PredefMacros {
 
     public static final Atom bgcolor_macro(final TeXParser tp, final String[] args) throws ParseException {
         try {
-            return new ColorAtom(new TeXFormula(tp, args[2]).root, ColorAtom.getColor(args[1]), null);
+            return new ColorAtom(TeXFormula.make(tp, args[2]).root, ColorAtom.getColor(args[1]), null);
         } catch (NumberFormatException e) {
             throw new ParseException(e.toString());
         }
     }
 
     public static final Atom textcolor_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new ColorAtom(new TeXFormula(tp, args[2]).root, null, ColorAtom.getColor(args[1]));
+        return new ColorAtom(TeXFormula.make(tp, args[2]).root, null, ColorAtom.getColor(args[1]));
     }
 
     public static final Atom colorbox_macro(final TeXParser tp, final String[] args) throws ParseException {
         Color c = ColorAtom.getColor(args[1]);
-        return new FBoxAtom(new TeXFormula(tp, args[2]).root, c, c);
+        return new FBoxAtom(TeXFormula.make(tp, args[2]).root, c, c);
     }
 
     public static final Atom fcolorbox_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new FBoxAtom(new TeXFormula(tp, args[3]).root, ColorAtom.getColor(args[2]), ColorAtom.getColor(args[1]));
+        return new FBoxAtom(TeXFormula.make(tp, args[3]).root, ColorAtom.getColor(args[2]), ColorAtom.getColor(args[1]));
     }
 
     public static final Atom cong_macro(final TeXParser tp, final String[] args) throws ParseException {
@@ -1408,15 +1408,15 @@ public class PredefMacros {
             f = 2.5f;
         }
 
-        return new MonoScaleAtom(new TeXFormula(tp, tp.getOverArgument(), null, false, tp.isIgnoreWhiteSpace()).root, f);
+        return new MonoScaleAtom(TeXFormula.make(tp, tp.getOverArgument(), null, false, tp.isIgnoreWhiteSpace()).root, f);
     }
 
     public static final Atom jlatexmathcumsup_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new CumulativeScriptsAtom(tp.getLastAtom(), null, new TeXFormula(tp, args[1]).root);
+        return new CumulativeScriptsAtom(tp.getLastAtom(), null, TeXFormula.make(tp, args[1]).root);
     }
 
     public static final Atom jlatexmathcumsub_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new CumulativeScriptsAtom(tp.getLastAtom(), new TeXFormula(tp, args[1]).root, null);
+        return new CumulativeScriptsAtom(tp.getLastAtom(), TeXFormula.make(tp, args[1]).root, null);
     }
 
     public static final Atom dotminus_macro(final TeXParser tp, final String[] args) throws ParseException {
@@ -1644,7 +1644,7 @@ public class PredefMacros {
     }
 
     public static final Atom T_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new RotateAtom(new TeXFormula(tp, args[1]).root, 180, "origin=cc");
+        return new RotateAtom(TeXFormula.make(tp, args[1]).root, 180, "origin=cc");
     }
 
     public static final Atom romannumeral_macro(final TeXParser tp, final String[] args) throws ParseException {
@@ -1663,19 +1663,19 @@ public class PredefMacros {
             roman = roman.toLowerCase();
         }
 
-        return new TeXFormula(roman, false).root;
+        return TeXFormula.make(roman, false).root;
     }
 
     public static final Atom textcircled_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new TextCircledAtom(new RomanAtom(new TeXFormula(tp, args[1]).root));
+        return new TextCircledAtom(new RomanAtom(TeXFormula.make(tp, args[1]).root));
     }
 
     public static final Atom textsc_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new SmallCapAtom(new TeXFormula(tp, args[1], false).root);
+        return new SmallCapAtom(TeXFormula.make(tp, args[1], false).root);
     }
 
     public static final Atom sc_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new SmallCapAtom(new TeXFormula(tp, tp.getOverArgument(), null, false, tp.isIgnoreWhiteSpace()).root);
+        return new SmallCapAtom(TeXFormula.make(tp, tp.getOverArgument(), null, false, tp.isIgnoreWhiteSpace()).root);
     }
 
     public static final Atom quad_macro(final TeXParser tp, final String[] args) throws ParseException {
@@ -1820,6 +1820,6 @@ public class PredefMacros {
         buffer.append(str);
         str = buffer.toString();
 
-        return new TeXFormula(tp, str).root;
+        return TeXFormula.make(tp, str).root;
     }
 }

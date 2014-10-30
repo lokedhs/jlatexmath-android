@@ -45,7 +45,7 @@ public class DynamicAtom extends Atom {
     
     private static ExternalConverterFactory ecFactory;
     private ExternalConverter converter;
-    private TeXFormula formula = new TeXFormula();
+    private TeXFormula formula = TeXFormula.make();
     private String externalCode;
     private boolean insert;
     private boolean refreshed;

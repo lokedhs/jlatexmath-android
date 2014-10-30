@@ -28,11 +28,11 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Graphics2D;
-import java.awt.Stroke;
-import java.awt.BasicStroke;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Line2D;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Graphics2D;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Stroke;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.BasicStroke;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.geom.AffineTransform;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.geom.Line2D;
 
 /**
  * A box representing glue.
@@ -66,7 +66,7 @@ public class FcscoreBox extends Box {
 	    // spacing... 
 	    // So the increment (space+thickness) is done in using integer.
 	    s = sx;
-	    AffineTransform t = (AffineTransform) transf.clone();
+	    AffineTransform t = transf.copy();
 	    t.scale(1 / sx, 1 / sy);
 	    g2.setTransform(t);
 	}

@@ -28,10 +28,10 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Graphics2D;
-import java.awt.Stroke;
-import java.awt.BasicStroke;
-import java.awt.geom.Rectangle2D;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Graphics2D;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.Stroke;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.BasicStroke;
+import com.dhsdevelopments.androidjlatexmath.swingcompat.geom.Rectangle2D;
 
 /**
  * A box representing a rotated box.
